@@ -1,0 +1,268 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+        .main-autopic {
+            /* width: 460px;
+            height: 460px;
+            margin: 100px auto;*/
+            z-index: 0;
+            position: relative; 
+            width: 462px;
+            height: 460px;
+            margin-right: 20px;
+            z-index: 1;
+        }
+
+        .main-autopic .banner-slide {
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+        }
+
+        .main-autopic .banner-slide .slide-wrap {
+            width: 100%;
+            height: 100%;
+            position: absolute;
+            top: 0;
+            left: 0;
+        }
+
+        .main-autopic .banner-slide .slide-wrap img {
+            width: 100%;
+            height: 100%;
+        }
+
+        .main-autopic .slide_card {
+            width: 100%;
+            height: 60px;
+            position: absolute;
+            bottom: 0;
+            z-index: 1;
+            background: rgba(0, 0, 0, 0.5);
+        }
+
+
+        .main-autopic .slide_card .card_box {
+            width: 95px;
+            height: 60px;
+            float: left;
+            color: #8b8989;
+            text-align: center;
+            line-height: 60px;
+            position: relative;
+            padding: 0 10px;
+            cursor: pointer;
+        }
+
+        .main-autopic .slide_card .card_box i {
+            width: 95px;
+            line-height: 18px;
+            font-size: 14px;
+            font-style: normal;
+            display: inline-block;
+            vertical-align: middle;
+            padding: 2px 0;
+        }
+
+        .main-autopic .slide_card .play {
+            color: #fff;
+            background: #3b8bed;
+        }
+
+        .main-autopic .auto-banner {
+            position: absolute;
+            top: 0;
+            right: 0;
+            width: 120px;
+            height: 40px;
+            background: #333e50;
+            z-index: 1;
+        }
+
+        .main-autopic .auto-banner .one {
+            display: block;
+            line-height: 40px;
+            float: left;
+            font-size: 16px;
+            color: #fff;
+            min-width: 60px;
+            text-align: center;
+            text-decoration: none;
+
+        }
+
+        .main-autopic .auto-banner .banner {
+            background: #3b8bed;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="main-autopic">
+        <!-- 顶部选项卡 -->
+        <div class="auto-banner">
+            <a href="javascript:;" class="banner one" type="on">官方</a>
+            <a href="javascript:;" class="one" type="off">合作</a>
+        </div>
+        <!-- 文字层 -->
+        <div class="slide_card">
+            <div class=" card_box play">
+                <i>10.25蓬莱仙境新服</i>
+            </div>
+            <div class="card_box">
+                <i>群雄逐鹿冠军</i>
+            </div>
+            <div class="card_box">
+                <i> 驭龙猎手</i>
+            </div>
+            <div class="card_box">
+                <i>百城兽王赛</i>
+            </div>
+        </div>
+
+
+        <!-- 图片层 -->
+        <div class="banner-slide" id="guanfang_banner">
+            <div class="slide-wrap">
+                <a href="" class="wrap-p"><img src="./img/lun-01.jfif" alt=""></a>
+            </div>
+            <div class="slide-wrap">
+                <a href="" class="wrap-p"><img src="./img/lun-02.jfif" alt=""></a>
+            </div>
+            <div class="slide-wrap">
+                <a href="" class="wrap-p"><img src="./img/lun-03.jfif" alt=""></a>
+            </div>
+            <div class="slide-wrap">
+                <a href="" class="wrap-p"><img src="./img/lun-04.jfif" alt=""></a>
+            </div>
+        </div>
+        <div class="banner-slide" id="hezuo_banner">
+            <div class="slide-wrap">
+                <a href="" class="wrap-p"><img src="./img/another-01.jfif" alt=""></a>
+            </div>
+            <div class="slide-wrap">
+                <a href="" class="wrap-p"><img src="./img/another-02.jfif" alt=""></a>
+            </div>
+        </div>
+    </div>
+
+</body>
+
+</html>
+<script src="./js/jquery-1.11.3.min.js"></script>
+<script src="https://cdn.bootcss.com/underscore.js/1.9.1/underscore-min.js"></script>
+<script>
+    let slider = (function () {
+        let idSelector = '';
+        let $autoPic = null,
+            $slideWrap = null;
+        let $cardBox = null;
+        let $textCard = null;
+        let $GF = null;
+        let $HZ = null;
+        let $a = null;
+        let $sildeCard = null;
+        let n = 0,
+            timer = null;
+
+        function initEle() {
+            $autoPic = $(idSelector);
+            $autoPic = $('.main-autopic');
+            $slideWrap = $('.main-autopic .slide-wrap');
+            $cardBox = $('.slide_card .card_box');
+            $sildeCard = $('.slide_card'),
+                $textCard = $('.auto-banner');
+            $GF = $('#guanfang_banner');
+            $HZ = $('#hezuo_banner');
+            $a = $textCard.find('a');
+            $slideWrap.eq(0).siblings().hide();
+            autoMove();
+        }
+
+        function move() {
+            n++;
+            if (n >= $slideWrap.length) {
+                n = 0;
+            }
+            $slideWrap.eq(n).css({
+                opacity: 0
+            }).show().animate({
+                opacity: 1
+            }, 800).siblings().animate({
+                opacity: 0
+            }, 300, function () {
+                $slideWrap.eq(n).siblings().hide()
+            })
+            cardMove();
+        }
+
+        function autoMove() {
+            timer = setInterval(() => {
+                move();
+            }, 2000)
+        }
+
+        function cardMove() {
+            $cardBox.eq(n).addClass('play').siblings().removeClass('play');
+        }
+
+        function eventBind() {
+            $autoPic.on('mouseenter', function () {
+                clearInterval(timer)
+            })
+            $autoPic.on('mouseleave', function () {
+                autoMove();
+            })
+            $cardBox.on('mouseenter', _.throttle(function (e) {
+                let m = $(this).index();
+                n = m;
+                n--;
+                move();
+            }, 500))
+            $a.on('click', function (e) {
+                let tar = e.target || e.srcElement;
+                if (tar.nodeName.toLowerCase() === 'a') {
+                    if (tar.getAttribute('type') === 'on') {
+                        $(this).addClass('banner').siblings().removeClass('banner');
+                        $GF.css({
+                            display: 'block'
+                        });
+                        $HZ.css({
+                            display: 'none'
+                        });
+                        $sildeCard.css({
+                            display: 'block'
+                        });
+                    } else {
+                        $(this).addClass('banner').siblings().removeClass('banner');
+                        $GF.css({
+                            display: 'none'
+                        });
+                        $HZ.css({
+                            display: 'block'
+                        });
+                        $sildeCard.css({
+                            display: 'none'
+                        });
+                    }
+                }
+
+            })
+        }
+        return {
+            init(id) {
+                idSelector = id;
+                initEle();
+                eventBind()
+            }
+        }
+
+    })()
+    slider.init('#autoPic');
+</script>

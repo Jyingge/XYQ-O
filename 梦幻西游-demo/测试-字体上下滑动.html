@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+        .header_free {
+            width: 138px;
+            height: 54px;
+            overflow: hidden;
+            border-left: 1px solid #dadada;
+            border-right: 1px solid #dadada;
+            position: absolute;
+            right: 130px;
+            top: 0;
+        }
+        .headerbox{
+            width: 100%;
+            height: 165px;
+            position: absolute;
+            top: 0;
+            left: 0;
+        }
+        .header_free a {
+            display: inline-block;
+            width:100%;
+            height: 54px;
+            color: #333;
+            text-align: center;
+            line-height: 54px;
+            text-decoration: none;
+        }
+        .header_free a:hover {
+            border-bottom: 1px solid #cf1132;
+            height: 53px;
+            color: #cf1132;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="header_free">
+        <div class="headerbox">
+            <a target="_blank" href="https://ke.youdao.com/course/detail/25654?outVendor=zw_wangyiyouxi_ljyy0_01"
+                class="free">限时课程免费领取</a>
+            <a target="_blank" class=" free_hide"
+                href="https://ke.youdao.com/course/detail/25654?outVendor=zw_wangyiyouxi_ljyy0_01">游戏充值9.8折</a>
+            <a target="_blank" href="https://ke.youdao.com/course/detail/25654?outVendor=zw_wangyiyouxi_ljyy0_01"
+                class="free_one">限时课程免费领取</a>
+        </div>
+    </div>
+</body>
+
+</html>
+<script src="./js/jquery-1.11.3.min.js"></script>
+<script>
+    let $header_free = $('.header_free'),
+        $headerbox=$('.headerbox'),
+        $a = $('.header_free a');
+    let n = 0,timer = null;
+    function autoMove() {
+        timer = setInterval(() => {
+            move();
+        }, 3000);
+    }
+    function move() {
+        n++;
+        if (n >= $a.length) {
+            $headerbox.css({top: 0});
+            n = 1;
+        }
+        $headerbox.css({opacity:0 }).animate({ top: -n * 55 + 'px',opacity:1}, 900);
+    }
+    autoMove();
+</script>

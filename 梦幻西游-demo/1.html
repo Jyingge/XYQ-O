@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html>
+
+<head lang="en">
+    <meta charset="UTF-8">
+    <title>判断鼠标移入移出方向</title>
+    <style type="text/css">
+        * {
+            margin: 0;
+            padding: 0;
+        }
+
+        .outer {
+            width: 400px;
+            height: 400px;
+            background: blue;
+            margin: 100px 100px;
+            overflow: hidden;
+            position: relative;
+            float: left;
+        }
+
+        .outer .mask {
+            width: 400px;
+            height: 400px;
+            background-color: rgb(99, 99, 90, 0.5);
+            opacity: 0;
+            left: 0;
+            top: 0;
+            position: relative;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="box" class="outer">
+        <div class="mask"></div>
+    </div>
+    <div id="box2" class="outer">
+        <div class="mask"></div>
+    </div>
+    <script src="./js/jquery-1.11.3.min.js"></script>
+    <script type="text/javascript">
+        // function Tab(id) {
+
+        //     $oDiv.
+        // }
+        // new Tab('box');   
+       
+        function move(id) {
+            let $oDiv = $(id);
+            $oDiv.on('mouseenter', function moveIn(e) {
+                var resL = Math.abs(e.clientX - $oDiv.offset().left), //距离左边
+                    resT = Math.abs(e.clientY - $oDiv.offset().top), //距离上边
+                    resR = Math.abs(e.clientX - ($oDiv.offset().left + $oDiv.outerWidth())), //距离右边
+                    resB = Math.abs(e.clientY - ($oDiv.offset().top + $oDiv.outerHeight())); //距离下边
+                var min = Math.min(resL, resB, resR, resT);
+                let $oMask = $(this).find('.mask');
+                //console.log(resL, resB, resR, resT, min);
+                if (min === resL) {
+                    // console.log('左边移入');
+                    $oMask.css({
+                        left: -$oDiv.outerWidth()
+                    }).animate({
+                        left: 0,
+                        opacity: 1
+                    }, 400)
+                } else if (min === resT) {
+                    //    console.log('上边移入');
+                    $oMask.css({
+                        top: -$oDiv.outerHeight()
+                    }).animate({
+                        top: 0,
+                        opacity: 1
+                    }, 400)
+                } else if (min === resR) {
+                    // console.log('右边移入');
+                    $oMask.css({
+                        left: $oDiv.outerWidth()
+                    }).animate({
+                        left: 0,
+                        opacity: 1
+                    }, 400)
+                } else {
+                    //    console.log('下边移入');
+                    $oMask.css({
+                        top: $oDiv.outerHeight()
+                    }).animate({
+                        top: 0,
+                        opacity: 1
+                    }, 400)
+                }
+            })
+            $oDiv.on('mouseleave', function moveOut(e) {
+                var resL = Math.abs(e.clientX - $oDiv.offset().left), //距离左边
+                    resT = Math.abs(e.clientY - $oDiv.offset().top), //距离上边
+                    resR = Math.abs(e.clientX - ($oDiv.offset().left + $oDiv.outerWidth())), //距离右边
+                    resB = Math.abs(e.clientY - ($oDiv.offset().top + $oDiv.outerHeight())); //距离下边
+                var min = Math.min(resL, resB, resR, resT);
+                let $oMask = $(this).find('.mask');
+                //console.log(resL, resB, resR, resT, min);
+                if (min === resL) {
+                    // console.log('左边移出');
+                    $oMask.animate({
+                        left: -$oDiv.outerWidth()
+                    }, 400).animate({
+                        left: 0,
+                        opacity: 0
+                    }, 1)
+                } else if (min === resT) {
+                    //console.log('上边移出');
+                    $oMask.animate({
+                        top: -$oDiv.outerHeight()
+                    }, 400).animate({
+                        top: 0,
+                        opacity: 0
+                    }, 1)
+                } else if (min === resR) {
+                    //console.log('右边移出');
+                    $oMask.animate({
+                        left: $oDiv.outerWidth()
+                    }, 400).animate({
+                        left: 0,
+                        opacity: 0
+                    }, 1)
+                } else {
+                    //console.log('下边移出');
+                    $oMask.animate({
+                        top: $oDiv.outerHeight()
+                    }, 400).animate({
+                        top: 0,
+                        opacity: 0
+                    }, 1)
+                }
+            })
+        }
+        move('#box2')
+        move('#box')
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+    
+    *{margin:0; padding:0;}
+        img{border:0; cursor:pointer;}
+        .clearfix:after{display:block; height:0; line-height:0; clear:both; visibility:hidden;
+            content: '.';}
+        ul,li{display:block;}
+        body{font-size:14px; font-family:"microsoft yahei";}
+        #nav{width:800px; margin:100px auto;}
+        #nav ul li{float:left;}
+        #nav ul li h3{display:block; width:100px; height:300px; float:left;
+            text-align:center; line-height:300px; font-size:30px; cursor:pointer;}
+        .a{background:greenyellow}
+        .b{background:yellow}
+        .c{background:orange}
+        .d{background:paleturquoise}
+        #nav ul li div{width:400px; height:300px; float:left;}
+        .none{display:none;}
+        .block{display:block !important;}
+
+    </style>
+</head>
+<body>
+        <div id="nav">
+            <ul class="clearfix">
+                <li>
+                    <h3 class="a">MP3</h3>
+                    <div class="none">
+                        <img src="./img/wall01.png"/>
+                    </div>
+                </li>
+                <li>
+                    <h3 class="b">MP5</h3>
+                    <div>
+                        <img src="./img/wall01.png"/>
+                    </div>
+                </li>
+                <li>
+                    <h3 class="c">手机</h3>
+                    <div class="none">
+                        <img src="./img/wall01.png"/>
+                    </div>
+                </li>
+                <li>
+                    <h3 class="d">笔记本</h3>
+                    <div class="none">
+                        <img src="./img/wall01.png"/>
+                    </div>
+                </li>
+            </ul>
+        </div>
+        </body>
+        
+</html>
+
+<script src="./js/jquery-1.11.3.min.js"></script>
+
+    <script>
+        $(function(){
+            $("h3").click(function(){
+                $(this).next().addClass("block").stop().parent().siblings().children("div").attr("class","none")
+            })
+        })
+    </script>
